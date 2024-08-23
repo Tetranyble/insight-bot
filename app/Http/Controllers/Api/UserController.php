@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralRequest;
 use App\Http\Resources\UserCollection;
 use App\Models\User;
+use App\Services\JSonDataClient;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -61,8 +62,9 @@ class UserController extends Controller
      *
      * @return UserCollection
      */
-    public function index(GeneralRequest $request)
+    public function index(GeneralRequest $request, JSonDataClient $client)
     {
+
         $bots = (new User)
             ->search($request->search ?? '')
             ->paginate($request->quantity ?? 10);

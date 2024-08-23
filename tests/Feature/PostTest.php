@@ -12,6 +12,7 @@ use Tests\TestCase;
 class PostTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -22,10 +23,10 @@ class PostTest extends TestCase
     public function autobot_has_posts(): void
     {
         Post::factory(20)->create([
-            'user_id' => $this->user->id
+            'user_id' => $this->user->id,
         ]);
-        $response = $this->getJson(route('v1.autobots.posts.index',[
-            'user' => $this->user->id
+        $response = $this->getJson(route('v1.autobots.posts.index', [
+            'user' => $this->user->id,
         ]))
             ->assertStatus(200);
 

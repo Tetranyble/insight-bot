@@ -2,9 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Models\Autobot;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\User;
+use App\Services\JSonDataClient;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -19,7 +20,7 @@ class PostCreator implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(protected Autobot $bot, protected int $count = 10)
+    public function __construct(protected User $bot, protected int $userId, protected int $count = 10)
     {
         //
     }
@@ -27,37 +28,42 @@ class PostCreator implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(JSonDataClient $client): void
     {
-        $this->createPost($this->bot, $this->count);
+        $posts = $client->posts('GET', "users/{$this->userId}/posts", ['limit' => $this->count]);
+
+        $this->createPost($this->bot, $posts);
     }
 
-    protected function createPost(Autobot $bot, int $count = 10): void
+    protected function createPost(User $bot, mixed $posts): void
     {
-        for ($i = 0; $i < $count; $i++) {
-            $postName = $bot->name.Str::random();
+
+        for ($i = 0; $i < count($posts); $i++) {
+            $postName = $posts[$i]->title;
             while (Post::where('name', $postName)->exists()) {
-                $postName = $bot->name."-{$i}".Str::random();
+                $postName = $posts[$i]->name."-{$i}-".Str::random();
             }
             $posts = Post::create([
                 'name' => $postName,
-                'content' => "this quick brown fox leap over the lazy dog {$i}",
-                'autobot_id' => $bot->id,
+                'body' => $posts[$i]->body,
+                'user_id' => $bot->id,
             ]);
-            $posts->each(function ($post) use ($bot) {
-                $this->createComments($post, $bot, 10);
+            $posts->each(function ($post) use ($bot, $i, $posts) {
+                $this->createComments($post, $bot, $posts[$i]->id);
             });
         }
 
     }
 
-    protected function createComments(Post $post, Autobot $bot, int $count): void
+    protected function createComments(Post $post, User $bot, int $postId): void
     {
-        for ($i = 0; $i < $count; $i++) {
+        $comments = app(JSonDataClient::class)
+            ->comments('GET', "posts/{$postId}/comments", ['limit' => 10]);
+        for ($i = 0; $i < count($comments); $i++) {
             Comment::create([
-                'autobot_id' => $bot->id,
+                'user_id' => $bot->id,
                 'post_id' => $post->id,
-                'comment' => "The new comment section for {$bot->name}",
+                'comment' => $comments[$i]->body,
             ]);
         }
 

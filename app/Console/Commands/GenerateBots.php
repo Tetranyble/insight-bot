@@ -2,10 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\PostCreator;
-use App\Models\User;
+use App\Jobs\AutobotGenerator;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 class GenerateBots extends Command
 {
@@ -29,16 +27,9 @@ class GenerateBots extends Command
     public function handle()
     {
         for ($i = 0; $i < 500; $i++) {
-            $botName = 'Autobot-'.Str::random();
-
-            while (User::where('name', $botName)->exists()) {
-                $botName = "Autobot-{$i}".Str::random();
+            if ($i % 10 === 0) {
+                AutobotGenerator::dispatch(10);
             }
-            $author = User::create([
-                'name' => $botName,
-                'description' => 'Model-'.Str::random(5),
-            ]);
-            PostCreator::dispatch($author, 10);
         }
 
         $this->info('500 Autobots created successfully!');

@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralRequest;
 use App\Http\Resources\CommentCollection;
-use App\Http\Resources\PostCollection;
 use App\Models\Comment;
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -20,42 +18,51 @@ class CommentController extends Controller
      *     summary="The resource collection",
      *     description="The resource collection",
      *     operationId="Api/CommentController::index",
+     *
      *       @OA\Parameter(
      *          name="post",
      *          in="path",
      *          description="Search the resource by name",
      *          required=true,
+     *
      *          @OA\Schema(
      *              type="string",
      *          )
      *      ),
+     *
      *     @OA\Parameter(
      *         name="search",
      *         in="query",
      *         description="Search the resource by name",
      *         required=false,
+     *
      *         @OA\Schema(
      *             type="string",
      *         )
      *     ),
+     *
      *     @OA\Parameter(
      *         name="quantity",
      *         in="query",
      *         description="The quantity",
      *         required=false,
+     *
      *         @OA\Schema(
      *             type="integer",
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="The resource collection",
      *
      *         @OA\JsonContent(
      *             type="array",
+     *
      *             @OA\Items(ref="#/components/schemas/CommentResource")
      *         )
      *     ),
+     *
      *    @OA\Response(response=400, ref="#/components/responses/400"),
      *    @OA\Response(response=403, ref="#/components/responses/403"),
      *    @OA\Response(response=404, ref="#/components/responses/404"),
@@ -69,7 +76,7 @@ class CommentController extends Controller
     public function index(GeneralRequest $request, Post $post)
     {
 
-        $comments = (new Comment())
+        $comments = (new Comment)
             ->where('post_id', $post->id)
             ->search($request->search ?? '')
             ->paginate($request->quantity ?? 10);
