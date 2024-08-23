@@ -1,0 +1,520 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Insight AI API Docs",
+        "description": "Insight Application Programme Interface(Play Ground)",
+        "termsOfService": "This API is subject to terms of services and maybe be changed without service notice.",
+        "contact": {
+            "name": "Ekenekiso Leonard Ugbanawaji",
+            "url": "https://insight.ai",
+            "email": "senenerst@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://www.insight.test/public/web/images/logo.png"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://api.insight.ai/api/v1",
+            "description": "Insight API Live Server"
+        },
+        {
+            "url": "http://insight-bot.test/api/v1",
+            "description": "Insight API Local Server. This server is attached to the local environment."
+        },
+        {
+            "url": "http://localhost:8000/api/v1",
+            "description": "Insight API Local Server. This server is attached to the local environment."
+        },
+        {
+            "url": "https://insight.test"
+        }
+    ],
+    "paths": {
+        "posts/{post}/comments": {
+            "get": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "The resource collection",
+                "description": "The resource collection",
+                "operationId": "Api/CommentController::index",
+                "parameters": [
+                    {
+                        "name": "post",
+                        "in": "path",
+                        "description": "Search the resource by name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search the resource by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "The quantity",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The resource collection",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CommentResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                }
+            }
+        },
+        "/autobots/{autobot}/posts": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "The resource collection",
+                "description": "The resource collection",
+                "operationId": "Api/PostController::index",
+                "parameters": [
+                    {
+                        "name": "autobot",
+                        "in": "path",
+                        "description": "Search the resource by name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search the resource by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "The quantity",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The resource collection",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PostResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                }
+            }
+        },
+        "/autobots": {
+            "get": {
+                "tags": [
+                    "AutoBots"
+                ],
+                "summary": "The resource collection",
+                "description": "The resource collection",
+                "operationId": "Api/UserController::index",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search the resource by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "The quantity",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The resource collection",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "GeneralRequest": {
+                "properties": {
+                    "quantity": {
+                        "description": "The number of coourses per page. When not provided it default to 10 courses per page",
+                        "type": "integer"
+                    },
+                    "search": {
+                        "description": "The search term if any. It's completely optional",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CommentResource": {
+                "properties": {
+                    "id": {
+                        "description": "The user id",
+                        "type": "integer"
+                    },
+                    "comment": {
+                        "description": "The comment resource",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "The resource created date.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "PostResource": {
+                "properties": {
+                    "id": {
+                        "description": "The user id",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "The post resource name",
+                        "type": "string"
+                    },
+                    "content": {
+                        "description": "The post resource content",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "The resource created date.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UserResource": {
+                "properties": {
+                    "id": {
+                        "description": "The user id",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "The user firstname",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The user email",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "The resource created date.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Ok.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Ok.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "201": {
+                "description": "Created.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Created.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "202": {
+                "description": "Accepted.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Created.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "204": {
+                "description": "No Content.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "No Content.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Bad Request.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Bad Request.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Unauthenticated.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Unauthenticated.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "403": {
+                "description": "Forbidden.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Forbidden.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "Resource Not Found.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Resource Not Found.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "413": {
+                "description": "Request Entity Too Large.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Request Entity Too Large.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "422": {
+                "description": "Unprocessable Entity.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Unprocessable Entity.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "423": {
+                "description": "Locked.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Locked.",
+                            "errors": []
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Server Error.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": {
+                            "message": "Server Error.",
+                            "errors": []
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://insight-bot.test/oauth/authorize",
+                        "tokenUrl": "http://insight-bot.test/api/v1/login",
+                        "refreshUrl": "http://insight-bot.test/token/refresh",
+                        "scopes": []
+                    }
+                }
+            },
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Comments",
+            "description": "Comments"
+        },
+        {
+            "name": "Posts",
+            "description": "Posts"
+        },
+        {
+            "name": "AutoBots",
+            "description": "AutoBots"
+        }
+    ]
+}
