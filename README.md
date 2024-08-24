@@ -26,8 +26,13 @@ Another server [documentation](https://api.insight.ai/api/v1/documentation)
   `cd insight-bot && composer install`
   `php artisan test` This guarantees that everything is working as expected.
 - Next up migrate and seed the local development server:
-  `php artisan migrate --seed`
+  - `php artisan migrate`
+  - `php artisan schedule:run`
+  - `php artisan queue:work`
 
+Note: you might want to change `$schedule->command('autobots:generate')->hourly();` to this `$schedule->command('autobots:generate')->everyMinute();`
+    to see things work out as expected.
+  - 
 ### Windows Users
 - Start the local development server if you're on window: `php artisan server`
 
