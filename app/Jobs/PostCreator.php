@@ -45,7 +45,7 @@ class PostCreator implements ShouldQueue
             }
             $posts = Post::create([
                 'name' => $postName,
-                'body' => $posts[$i]->body,
+                'content' => $posts[$i]->body,
                 'user_id' => $bot->id,
             ]);
             $posts->each(function ($post) use ($bot, $i, $posts) {
