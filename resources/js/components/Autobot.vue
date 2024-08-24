@@ -6,7 +6,8 @@ export default {
     data() {
         return {
             users: [],
-            intervalId: null
+            intervalId: null,
+            totalCount: 0,
         };
     },
     mounted() {
@@ -20,7 +21,8 @@ export default {
             try {
                 const response = await axios.get('autobots');
                 this.users = response.data.data;
-
+                this.totalCount = response.data.meta.total
+                console.log(response.data.meta)
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -31,7 +33,14 @@ export default {
 
 <template>
     <div class="p-6 bg-gray-100 min-h-screen">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">User List</h2>
+        <div class="p-6">
+            <!-- Display the total count prominently -->
+            <div class="mb-4">
+                <h1 class="text-2xl font-bold text-gray-900">Total Autobots</h1>
+                <p class="text-4xl font-extrabold text-blue-600">{{ totalCount }}</p>
+            </div>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Autobot List</h2>
         <ul v-if="users.length" class="bg-white rounded-lg shadow-md p-4">
             <li v-for="user in users" :key="user.id" class="py-2 border-b border-gray-200 last:border-none">
                 <span class="text-lg font-semibold text-gray-700">{{ user.name }}</span>
