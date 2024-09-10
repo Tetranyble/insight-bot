@@ -18,7 +18,7 @@ class NIBSSClient extends Client
         parent::__construct(array_merge([
             'base_uri' => $this->endpoint,
             'headers' => [
-                'Authorization' => "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyJ9.eyJhdWQiOiJlYzY5MWQ1NC0xMjcwLTQ2MDMtODg0MS1jZjcwMDEyNWFhMTIiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vMjc5YzdiMWItYmEwNi00MjdiLWE2ODEtYzhhNTQ5MmQyOTNkL3YyLjAiLCJpYXQiOjE3MjU1Mzg3OTgsIm5iZiI6MTcyNTUzODc5OCwiZXhwIjoxNzI1NTQyNjk4LCJhaW8iOiJFMmRnWU9EbnF0RitkdjZDR2YvTmMvMUhCRFlWOGh5Sml6NzgwVUZUOU16YlQrZDRKZVFCIiwiYXpwIjoiZWM2OTFkNTQtMTI3MC00NjAzLTg4NDEtY2Y3MDAxMjVhYTEyIiwiYXpwYWNyIjoiMSIsInJoIjoiMC5BWUlBRzN1Y0p3YTZlMEttZ2NpbFNTMHBQVlFkYWV4d0VnTkdpRUhQY0FFbHFoS0NBQUEuIiwidGlkIjoiMjc5YzdiMWItYmEwNi00MjdiLWE2ODEtYzhhNTQ5MmQyOTNkIiwidXRpIjoiempxQlpvbnpHVUNMbEFjODhqR2tBQSIsInZlciI6IjIuMCJ9.h5rSAOZ2QhaP7xfzDEVGc7iOj7RtAvpS5WEd-LiqHH0VFrkKPTDiNjpVfqJeJvXLBVSyCqhJLiunHFvdCztpGx7C0YAM768tHU4nAFnJ7_6miqSXAeCafnQTV5m70usIavnuwM2owL4ysRRWt-rTWrrlgA9C_UiLTg2siWicdVxSS8qY7caLtk9I8QmRlhIMruzYKxtE_3l1eH3dTLqXdwTU6cT-wqZFnjonOn2wye9pZ0pjD07qT9hTrYyoO1WUpf2FdS4mlZDyiIpCXF7vM8PnwDk2ttloTLyfHjuBSA1gV323OUf36fiLVFENZb3_AWrlpR1xSmJxodvr34FI2A",
+                'Authorization' => "Bearer ",
                 'Accept'        => 'application/json',
                 'Content-Type'  => 'application/x-www-form-urlencoded',
                 'apikey' => config('services.nibss.api_key'),
