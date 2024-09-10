@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\JSonDataClient;
+use App\Services\NIBSSClient;
 use Illuminate\Support\ServiceProvider;
 
 class JsonServiceProvider extends ServiceProvider
@@ -14,6 +15,9 @@ class JsonServiceProvider extends ServiceProvider
     {
         $this->app->singleton(JSonDataClient::class, function ($app) {
             return new JSonDataClient([]);
+        });
+        $this->app->singleton(NIBSSClient::class, function ($app) {
+            return new NIBSSClient([]);
         });
     }
 
