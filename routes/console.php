@@ -42,7 +42,7 @@ Artisan::command('one:insight', function () {
         "email" =>"counselokpabijs@gmail.com",
         "Gender" =>"male",
         "NationalIdentityNo" => "31303938831",
-        "AccountOfficerCode" => "3453"
+        "AccountOfficerCode" => "52"
     ]);
     $this->comment('Done!');
 })->describe('Run a request bankone create customer API.');
