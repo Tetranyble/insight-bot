@@ -23,7 +23,7 @@ Route::get('nibss/reset', function (\App\Services\NIBSSClient $client){
 
     $response = $client->reset();
     return $response;
-});
+})->name('reset');
 Route::get('nibss/products', function (\App\Services\NIBSSClient $client){
     /**
      * {
@@ -39,7 +39,7 @@ Route::get('nibss/products', function (\App\Services\NIBSSClient $client){
      * }
      */
     return $client->getProducts(415);
-});
+})->name('products');
 Route::get('nibss/easypay', function (\App\Services\NIBSSEasyPay $client){
     $response = $client->reset();
     return $response;
