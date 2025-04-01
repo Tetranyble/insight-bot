@@ -36,11 +36,22 @@ return [
         'key' => env('JSON_KEY', ''),
     ],
     'nibss' => [
-        'app_name' => env('NIBSS_APP_NAME', ''),
-        'client_id' => env('NIBSS_CLIENT_ID', ''),
-        'client_secret' => env('NIBSS_CLIENT_SECRET', ''),
-        'api_key' => env('NIBSS_API_KEY', ''),
-        'base_url' => env('NIBSS_BASE_URL', '')
+        'ndd' => [
+            'app_name' => env('NIBSS_APP_NAME', ''),
+            'client_id' => env('NIBSS_CLIENT_ID', ''),
+            'client_secret' => env('NIBSS_CLIENT_SECRET', ''),
+            'api_key' => env('NIBSS_API_KEY', ''),
+            'base_url' => env('NIBSS_BASE_URL', ''),
+            'token' => env('NIBSS_JWT', ''),
+        ],
+        'easypay' => [
+            'app_name' => env('NIBSS_EASYPAY_APP_NAME', ''),
+            'client_id' => env('NIBSS_EASYPAY_CLIENT_ID', ''),
+            'client_secret' => env('NIBSS_EASYPAY_CLIENT_SECRET', ''),
+            'api_key' => env('NIBSS_EASYPAY_API_KEY', ''),
+            'base_url' => env('NIBSS_EASYPAY_BASE_URL', ''),
+            'token' => env('NIBSS_EASYPAY_JWT', ''),
+        ]
     ],
 
     'bone' => [

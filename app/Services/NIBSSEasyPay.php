@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Services;
+
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-class NIBSSClient extends Client
+
+class NIBSSEasyPay extends Client
 {
     protected string $key;
 
@@ -13,8 +15,8 @@ class NIBSSClient extends Client
     public function __construct(array $config = [])
     {
 
-        $this->endpoint = config('services.nibss.base_url');
-        $this->key = config('services.nibss.token');
+        $this->endpoint = config('services.nibss.easypay.base_url');
+        $this->key = config('services.nibss.easypay.token');
 
         parent::__construct(array_merge([
             'base_uri' => $this->endpoint,
@@ -24,73 +26,44 @@ class NIBSSClient extends Client
             //'debug' => true,
             'headers' => [
                 'Authorization' => "Bearer $this->key",
-                'Accept'        => 'application/json',
+                'Accept' => 'application/json',
                 //'Content-Type'  => 'application/x-www-form-urlencoded',
-                'apikey' => config('services.nibss.api_key'),
+                'apikey' => config('services.nibss.easypay.api_key'),
+                'client_id' => config('services.nibss.easypay.client_id'),
             ],
         ], $config));
 
     }
 
-    /**
-     * @param array $data
-     * @return mixed
-     * @throws GuzzleException
-     */
-    public function createMandateDirectDebit(array $data): mixed
+
+    public function institutions(): mixed
     {
 
-        return $this->sends('POST', 'ndd/v2/api/MandateRequest/CreateMandateDirectDebit', [
-            'Content-Type' => 'multipart/form-data',
-            'data' =>  $data
-        ]);
-    }
-    public function createEMandate(array $data): mixed
-    {
-
-        return $this->sends('POST', 'ndd/v2/api/MandateRequest/CreateEmandate', [
+        return $this->sends('GET', 'nipservice/v1/nip/institutions', [
             'Content-Type' => 'application/json',
-            'data' =>  $data
+            'data' => [
+
+            ]
         ]);
     }
-
-    /**
-     * Get Biller products from NIBSS NDD
-     *
-     * @param integer $billerId
-     * @return mixed
-     * @throws GuzzleException
-     */
-    public function getProducts(int $billerId,array $data = [])
+    public function transfer(array $data): mixed
     {
-        return $this->sends('GET', 'ndd/v2/api/Biller/GetProduct/'.$billerId, [
-            'Content-Type' => 'application/json',
-            'data' =>  $data
-        ]);
 
+        return $this->sends('POST', 'nipservice/v1/nip/fundstransfer', [
+            'Content-Type' => 'application/json',
+            'data' => $data
+        ]);
     }
 
-    /**
-     * Create the biller. In this case Boctrust MFB
-     * @param array $data
-     * @return mixed
-     * @throws GuzzleException
-     */
-    public function createBiller(array $data): mixed
+    public function balance(array $data): mixed
     {
-        return $this->sends('POST', 'ndd/api/Biller/CreateBiller', [
+
+        return $this->sends('POST', 'nipservice/v1/nip/balanceenquiry', [
             'Content-Type' => 'application/json',
-            'data' =>  $data
+            'data' => $data
         ]);
     }
 
-    public function createProduct(array $data): mixed
-    {
-        return $this->sends('POST', 'ndd/api/Biller/CreateProduct', [
-            'Content-Type' => 'application/json',
-            'data' =>  $data
-        ]);
-    }
 
     /**
      * Call this endpoint whenever the token expires
@@ -98,15 +71,15 @@ class NIBSSClient extends Client
      *
      * @throws GuzzleException
      */
-    public function reset( array $options = []): mixed
+    public function reset(array $options = []): mixed
     {
         return $this->sends('POST', 'v2/reset', [
             'Content-Type' => 'application/x-www-form-urlencoded',
             'data' => array_merge([
-                'client_Id'     => config('services.nibss.client_id'),
-                'scope'         => config('services.nibss.client_id').'/.default',
-                'grant_type'    => 'client_credentials',
-                'client_secret' => config('services.nibss.client_secret'),
+                'client_id' => config('services.nibss.easypay.client_id'),
+                'scope' => config('services.nibss.easypay.client_id') . '/.default',
+                'grant_type' => 'client_credentials',
+                'client_secret' => config('services.nibss.easypay.client_secret'),
             ], $options)
         ]);
     }
@@ -127,7 +100,7 @@ class NIBSSClient extends Client
                     $options['Content-Type'],
                     $options['data']
                 )
-            )->getHeaders();
+            )->getBody();
 
             return $this->prepareResponse($response);
 
@@ -165,7 +138,6 @@ class NIBSSClient extends Client
     }
 
 
-
     /**
      * @param string $contentType
      * @param array $data
@@ -193,7 +165,7 @@ class NIBSSClient extends Client
                     if (is_array($contents) && isset($contents['contents'])) {
                         // Handling file uploads
                         $multipartData[] = [
-                            'name'     => $name,
+                            'name' => $name,
                             'contents' => $contents['contents'],
                             'filename' => $contents['filename'] ?? null,
                         ];
@@ -201,7 +173,7 @@ class NIBSSClient extends Client
                     } else {
                         // Handling regular form data
                         $multipartData[] = [
-                            'name'     => $name,
+                            'name' => $name,
                             'contents' => $contents,
                         ];
                     }
