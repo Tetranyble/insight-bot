@@ -13,8 +13,8 @@ class NIBSSClient extends Client
     public function __construct(array $config = [])
     {
 
-        $this->endpoint = config('services.nibss.base_url');
-        $this->key = config('services.nibss.token');
+        $this->endpoint = config('services.nibss.ndd.base_url');
+        $this->key = config('services.nibss.ndd.token');
 
         parent::__construct(array_merge([
             'base_uri' => $this->endpoint,
@@ -26,7 +26,7 @@ class NIBSSClient extends Client
                 'Authorization' => "Bearer $this->key",
                 'Accept'        => 'application/json',
                 //'Content-Type'  => 'application/x-www-form-urlencoded',
-                'apikey' => config('services.nibss.api_key'),
+                'apikey' => config('services.nibss.ndd.api_key'),
             ],
         ], $config));
 
@@ -103,10 +103,10 @@ class NIBSSClient extends Client
         return $this->sends('POST', 'v2/reset', [
             'Content-Type' => 'application/x-www-form-urlencoded',
             'data' => array_merge([
-                'client_Id'     => config('services.nibss.client_id'),
-                'scope'         => config('services.nibss.client_id').'/.default',
+                'client_Id'     => config('services.nibss.ndd.client_id'),
+                'scope'         => config('services.nibss.ndd.client_id').'/.default',
                 'grant_type'    => 'client_credentials',
-                'client_secret' => config('services.nibss.client_secret'),
+                'client_secret' => config('services.nibss.ndd.client_secret'),
             ], $options)
         ]);
     }
@@ -127,7 +127,7 @@ class NIBSSClient extends Client
                     $options['Content-Type'],
                     $options['data']
                 )
-            )->getHeaders();
+            )->getBody();
 
             return $this->prepareResponse($response);
 
